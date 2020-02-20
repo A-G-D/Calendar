@@ -3,11 +3,11 @@
 #ifndef __UTILS_HPP__
 #define __UTILS_HPP__
 
-class CalendarUtils::Date;
+#include "calendarutils.hpp"
 
 unsigned short GetDateWeekPosition(CalendarUtils::Date *date);
 unsigned short GetDateDayIndex(CalendarUtils::Date *date);
-unsigned short GetMonthDayCOunt(unsigned short month);
+unsigned short GetMonthDayCount(CalendarUtils::Date *date);
 
 #endif
 

@@ -22,7 +22,7 @@ public:
 	void clearHandlers();
 
 	Event();
-	~Event();
+	virtual ~Event();
 };
 
 #endif

@@ -1,10 +1,83 @@
-// calendarutils.hpp
 #pragma once
 
 #ifndef __CALENDAR_UTILS_HPP__
 #define __CALENDAR_UTILS_HPP__
+/******************************************************************************
+*
+*	API
+*
+*	namespace CalendarUtils
+*
+*		enum CalendarViewType
+*
+*			WEEK_VIEW
+*			MONTH_VIEW
+*
+*
+*		class Calendar
+*
+*		(Constructors)
+*
+*			Calendar()
+*			Calendar(Calendar const &calendar)
+*
+*		(Methods)
+*			CalendarView &getView()
+*			CalendarViewType getViewType()
+*			void setViewType(CalendarViewType view)
+*
+*
+*		class WeekView
+*
+*		(Constructors)
+*
+*			WeekView()
+*			WeekView(WeekView const &weekView)
+*
+*		(Fields)
+*
+*			Event *onClick
+*
+*		(Methods)
+*
+*			unsigned short getMaxWeekCount()
+*			void setMaxWeekCount(unsigned short count)
+*
+*			virtual void onShow()
+*			virtual void onHide()
+*			virtual void display()
+*
+*
+*		class MonthView
+*
+*		(Constructors)
+*
+*			MonthView()
+*			MonthView(MonthView const &monthView)
+*
+*		(Fields)
+*
+*			Event *onClick
+*
+*		(Methods)
+*
+*			virtual void onShow()
+*			virtual void onHide()
+*			virtual void display()
+*
+*
+*		class Date
+*
+*
+*		class Day
+*
+*
+*		class Reminder
+*
+*******************************************************************************/
 
 #include <vector>
+#include <string>
 
 namespace CalendarUtils
 {
@@ -13,7 +86,6 @@ namespace CalendarUtils
 	class WeekView;
 	class MonthView;
 	class Date;
-	class Day;
 	class Reminder;
 
 	enum CalendarViewType
@@ -22,33 +94,42 @@ namespace CalendarUtils
 		MONTH_VIEW
 	};
 
-	namespace
+	class Event;
+
+	class CalendarView
 	{
-		class Event;
+	private:
 
-		class CalendarView
-		{
-		private:
+		friend class Calendar;
 
-			CalendarView();
+		Calendar *__calendar;
 
-		protected:
+		CalendarView();
 
-			unsigned short __dayCount;
-			Day *__days;
+	protected:
 
-		public:
+		unsigned short __daySlots;
+		Date *__days;
 
-			Event *onClick;
+		virtual void onShow();
+		virtual void onHide();
 
-			virtual void display();
-			virtual void createFromDate(Date const &date);
+	public:
 
-			CalendarView(unsigned short dayCount);
-			CalendarView(CalendarView const &calendarView);
-			virtual ~CalendarView();
-		};
-	}
+		void *__data;
+		Event *onDisplay;
+
+		unsigned short daySlots() const;
+
+		virtual unsigned short dayCount();
+
+		virtual void display();
+		virtual void createFromDate(Date const &date);
+
+		CalendarView(unsigned short dayCount);
+		CalendarView(CalendarView const &calendarView);
+		virtual ~CalendarView();
+	};
 
 	class Calendar
 	{
@@ -57,16 +138,21 @@ namespace CalendarUtils
 		CalendarViewType __viewType;
 		WeekView *__weekView;
 		MonthView *__monthView;
+		Date *__date;
+
+		void InitData(Calendar *calendar);
 
 	public:
 
-		CalendarView &getView() const;
+		void goToDate(Date const &date);
 
+		CalendarView &getView();
 		CalendarViewType getViewType() const;
 		void setViewType(CalendarViewType view);
 
-		Calendar();
+		Calendar(CalendarViewType viewType);
 		Calendar(Calendar const &calendar);
+		Calendar();
 		~Calendar();
 	};
 
@@ -76,12 +162,23 @@ namespace CalendarUtils
 
 		unsigned short __maxWeekCount;
 
+	protected:
+
+		virtual void onShow() override;
+		virtual void onHide() override;
+
 	public:
+
+		unsigned short getMaxWeekCount() const;
+		void setMaxWeekCount(unsigned short count);
+
+		virtual unsigned short dayCount() override;
 
 		virtual void display() override;
 
-		WeekView();
+		WeekView(unsigned short maxWeekCount);
 		WeekView(WeekView const &weekView);
+		WeekView();
 		virtual ~WeekView();
 	};
 
@@ -91,12 +188,17 @@ namespace CalendarUtils
 
 		
 
+	protected:
+
+		virtual void onShow() override;
+		virtual void onHide() override;
+
 	public:
 
 		virtual void display() override;
 
-		MonthView();
 		MonthView(MonthView const &monthView);
+		MonthView();
 		virtual ~MonthView();
 	};
 
@@ -104,38 +206,38 @@ namespace CalendarUtils
 	{
 	private:
 
-		int __year;
+		friend class Calendar;
+
 		unsigned short
-			__month,
-			__day;
+			__day,
+			__month;
+		int __year;
+		std::vector<Reminder> *__reminders;
 
 		Date();
 
 	public:
 
-		Date(int year, unsigned short month, unsigned short day);
-		Date(Date const &date);
-		~Date();
-	};
+		static Date const &today();
 
-	class Day
-	{
-	private:
+		bool operator==(Date const &date);
+		bool operator!=(Date const &date);
+		bool operator<(Date const &date);
+		bool operator>(Date const &date);
+		bool operator<=(Date const &date);
+		bool operator>=(Date const &date);
 
-		unsigned short __number;
-		unsigned short __weekIndex;
-		std::vector<Reminder> __reminders;
+		unsigned short day() const;
+		unsigned short month() const;
+		int year() const;
 
-		Day();
-
-	public:
-
+		std::vector<Reminder> getReminders();
 		void addReminder(Reminder const &reminder);
 		void clearReminders();
 
-		Day(unsigned short dayNumber);
-		Day(Day const &day);
-		~Day();
+		Date(int year, unsigned short month, unsigned short day);
+		Date(Date const &date);
+		~Date();
 	};
 
 	class Reminder
@@ -147,6 +249,8 @@ namespace CalendarUtils
 			__minute,
 			__second;
 
+		std::string __note;
+
 		Reminder();
 
 	public:
@@ -154,8 +258,9 @@ namespace CalendarUtils
 		unsigned short hour() const;
 		unsigned short minute() const;
 		unsigned short second() const;
+		std::string &note() const;
 
-		std::string &toString() const;
+		std::string toString();
 
 		void update(unsigned short hour, unsigned short minute, unsigned short second);
 
