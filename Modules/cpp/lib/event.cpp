@@ -1,6 +1,10 @@
 // event.cpp
 #include "event.hpp"
 
+Event::Event(Event const &event)
+	: __handlers(event.__handlers)
+{
+}
 Event::Event()
 {
 }

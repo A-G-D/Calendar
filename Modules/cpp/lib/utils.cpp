@@ -1,18 +1,20 @@
-// utils.hpp
+// utils.cpp
 #include "calendarutils.hpp"
 
 using namespace CalendarUtils;
 
 unsigned short GetDateWeekPosition(Date *date)
 {
-	return ...;
+	return 0;//...
 }
 unsigned short GetDateDayIndex(Date *date)
 {
-	unsigned short modulu(date->day()%7);
-	if (!modulu)
+	unsigned short
+		modulu(date->day()%7),
+		weekPosition(GetDateWeekPosition(date));
+	if (!modulu && weekPosition == 6)
 		modulu = 7;
-	return GetDateWeekPosition(date) + date.day() - modulu;
+	return weekPosition + date->day() - modulu;
 }
 unsigned short GetMonthDayCount(Date *date)
 {
@@ -21,7 +23,7 @@ unsigned short GetMonthDayCount(Date *date)
 		case 1:
 			return 31;
 		case 2:
-			return (!(date->year()%4) || !(date->year()%100)) ? 29 : 28;
+			return ((!(date->year()%4) || !(date->year()%400)) && !(date->year()%100)) ? 29 : 28;
 		case 3:
 			return 31;
 		case 4:
