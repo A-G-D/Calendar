@@ -1,1 +1,1 @@
-Directory of the app's source code (excluding libraries and modules)
+Directory of the app's main source code (excluding libraries and modules)
