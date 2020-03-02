@@ -1,3 +1,26 @@
+/*
+*	<calendarapp.hpp>
+*
+*
+*	|-----|
+*	| API |
+*	|-----|
+*
+*	class Event
+*
+*		Event(Event const event)
+*		Event()
+*			- Constructors
+*
+*		void execute(void *v)
+*			- Executes all registered callback functions
+*
+*		void registerHandler(callback h)
+*			- Registers a function <h> to this Event
+*			- The interface for callback functions is 'void FuncName(int i)'
+*		void clearHandlers()
+*			- Removes all registered callback functions
+*/
 #pragma once
 
 #ifndef __EVENT_HPP__
