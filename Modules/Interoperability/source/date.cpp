@@ -45,6 +45,28 @@ int Date::year()
 	return __ptr->year();
 }
 
+bool Date::isLeapYear()
+{
+	return __ptr->isLeapYear();
+}
+
+int Date::getDistance(Date ^date)
+{
+	return __ptr->getDistance(*(date->__ptr));
+}
+unsigned short Date::getWeekPosition()
+{
+	return __ptr->getWeekPosition();
+}
+unsigned short Date::getDayIndex()
+{
+	return __ptr->getDayIndex();
+}
+unsigned short Date::getMonthDayCount()
+{
+	return __ptr->getMonthDayCount();
+}
+
 List<Reminder^> ^Date::getReminders()
 {
 	std::vector<NativeReminder> const &vec(__ptr->getReminders());
