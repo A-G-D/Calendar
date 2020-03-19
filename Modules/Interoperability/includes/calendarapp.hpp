@@ -102,6 +102,18 @@
 *				- Date attributes: day, month, and year
 *				- Years B.C.E. are negative
 *
+*			bool isLeapYear()
+*
+*			int getDistance(Date date)
+*				- Gets the number of days between 'this' and 'date'
+*				- Returns negative if 'this' > 'date'
+*			unsigned short getWeekPosition()
+*				- Returns a value (0 - 6) corresponding to the position of the specific Date in the week
+*				- 0 = Sunday; 6 = Saturday
+*			unsigned short getDayIndex()
+*				- Index counts from 0 to 34 since the array size of the Dates of a month is 7*5 = 35
+*			unsigned short getMonthDayCount()
+*
 *			List<Reminder> getReminders()
 *				- Returns the list of Reminders for this Date
 *			void addReminder(Reminder reminder)
@@ -121,7 +133,7 @@
 *			unsigned short second()
 *				- Returns the time attributes of this Reminder
 *			String note()
-*				- 
+*				- Returns the note attached to this Reminder
 *
 *			String toString()
 *				- Returns "HH : MM : SS"
@@ -278,6 +290,13 @@ namespace CalendarApp
 		unsigned short day();
 		unsigned short month();
 		int year();
+
+		bool isLeapYear();
+
+		int getDistance(Date ^date);
+		unsigned short getWeekPosition();
+		unsigned short getDayIndex();
+		unsigned short getMonthDayCount();
 
 		List<Reminder^> ^getReminders();
 		void addReminder(Reminder ^reminder);
