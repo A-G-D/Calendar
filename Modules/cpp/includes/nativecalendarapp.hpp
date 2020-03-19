@@ -232,6 +232,13 @@ namespace NativeCalendarApp
 		unsigned short month() const;
 		int year() const;
 
+		bool isLeapYear() const;
+
+		int getDistance(NativeDate const &date);
+		unsigned short getWeekPosition();
+		unsigned short getDayIndex();
+		unsigned short getMonthDayCount();
+
 		std::vector<NativeReminder> getReminders();
 		void addReminder(NativeReminder const &reminder);
 		void clearReminders();
