@@ -1,27 +1,30 @@
 // nativeevent.cpp
 #include "nativeevent.hpp"
 
-NativeEvent::NativeEvent(NativeEvent const &event)
+#define __ NativeEvent
+
+
+__::__(__ const &event)
 	: __handlers(event.__handlers)
 {
 }
-NativeEvent::NativeEvent()
+__::__()
 {
 }
-NativeEvent::~NativeEvent()
+__::~__()
 {
 }
 
-void NativeEvent::execute(void *v = 0)
+void __::execute(void *v = 0)
 {
 	for(handler h : __handlers) h(v);
 }
 
-void NativeEvent::registerHandler(handler h)
+void __::registerHandler(handler h)
 {
 	__handlers.push_back(h);
 }
-void NativeEvent::clearHandlers()
+void __::clearHandlers()
 {
 	__handlers.clear();
 }

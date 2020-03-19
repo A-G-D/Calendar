@@ -3,27 +3,30 @@
 
 using namespace NativeCalendarApp;
 
-NativeMonthView::NativeMonthView(NativeMonthView const &monthView)
+#define __ NativeMonthView
+
+
+__::__(__ const &monthView)
 	: NativeCalendarView(monthView)
 {
 }
-NativeMonthView::NativeMonthView()
+__::__()
 	: NativeCalendarView(35)
 {
 }
-NativeMonthView::~NativeMonthView()
+__::~__()
 {
 }
 
-void NativeMonthView::onShow()
+void __::onShow()
 {
 	NativeCalendarView::onShow();
 }
-void NativeMonthView::onHide()
+void __::onHide()
 {
 	NativeCalendarView::onHide();
 }
-void NativeMonthView::display()
+void __::display()
 {
 	NativeCalendarView::display();
 }

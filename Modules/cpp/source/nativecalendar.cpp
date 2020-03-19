@@ -1,54 +1,56 @@
 // nativecalendar.cpp
 #include "nativecalendarapp.hpp"
-#include "nativecalendarutils.hpp"
 
 using namespace NativeCalendarApp;
 
-void NativeCalendar::InitData(NativeCalendar *calendar)
+#define __ NativeCalendar
+
+
+void __::InitData(__ *calendar)
 {
 	((NativeCalendarView*)(calendar->__weekView))->__data = calendar;
 	((NativeCalendarView*)(calendar->__monthView))->__data = calendar;
 }
 
-NativeCalendar::NativeCalendar(NativeCalendarViewType viewType)
+__::__(NativeCalendarViewType viewType)
 	: __viewType(viewType), __weekView(new NativeWeekView), __monthView(new NativeMonthView)
 {
 	InitData(this);
 }
-NativeCalendar::NativeCalendar(NativeCalendar const &calendar)
+__::__(__ const &calendar)
 	: __viewType(calendar.__viewType), __weekView(new NativeWeekView), __monthView(new NativeMonthView)
 {
 	*__weekView = NativeWeekView(*calendar.__weekView);
 	*__monthView = NativeMonthView(*calendar.__monthView);
 	InitData(this);
 }
-NativeCalendar::NativeCalendar()
+__::__()
 	: __viewType(NativeCalendarViewType::MONTH_VIEW), __weekView(new NativeWeekView), __monthView(new NativeMonthView)
 {
 	InitData(this);
 }
-NativeCalendar::~NativeCalendar()
+__::~__()
 {
 	delete __weekView;
 	delete __monthView;
 }
 
-void NativeCalendar::goToDate(NativeDate const &date)
+void __::goToDate(NativeDate const &date)
 {
 	if (*__date != date)
 	{
 		unsigned short
-			dayIndex(GetDateDayIndex(date)),
+			dayIndex(const_cast<NativeDate&>(date).getDayIndex()),
 			index;
 		for (short i(0); i < getView().__daySlots; ++i)
 		{
 			index = i - dayIndex + 1;
-			if (index > 0 && index <= GetMonthDayCount(date))
+			if (index > 0 && index <= const_cast<NativeDate&>(date).getMonthDayCount())
 				getView().__days[index].__day = index;
 		}
 	}
 }
-NativeCalendarView &NativeCalendar::getView()
+NativeCalendarView &__::getView()
 {
 	switch (__viewType)
 	{
@@ -60,11 +62,11 @@ NativeCalendarView &NativeCalendar::getView()
 	}
 }
 
-NativeCalendarViewType NativeCalendar::getViewType() const
+NativeCalendarViewType __::getViewType() const
 {
 	return __viewType;
 }
-void NativeCalendar::setViewType(NativeCalendarViewType viewType)
+void __::setViewType(NativeCalendarViewType viewType)
 {
 	__viewType = viewType;
 	switch (viewType)
@@ -76,3 +78,5 @@ void NativeCalendar::setViewType(NativeCalendarViewType viewType)
 			break;
 	}
 }
+
+#undef __

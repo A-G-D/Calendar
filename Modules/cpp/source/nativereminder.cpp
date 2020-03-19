@@ -5,44 +5,47 @@
 using namespace NativeCalendarApp;
 using namespace std;
 
-NativeReminder::NativeReminder(unsigned short hour, unsigned short minute, unsigned short second)
+#define __ NativeReminder
+
+
+__::__(unsigned short hour, unsigned short minute, unsigned short second)
 	: __hour(hour), __minute(minute), __second(second)
 {
 }
-NativeReminder::NativeReminder(NativeReminder const &reminder)
+__::__(__ const &reminder)
 	: __hour(reminder.__hour), __minute(reminder.__minute), __second(reminder.__second)
 {
 }
-NativeReminder::NativeReminder()
+__::__()
 {
 }
-NativeReminder::~NativeReminder()
+__::~__()
 {
 }
 
-unsigned short NativeReminder::hour() const
+unsigned short __::hour() const
 {
 	return __hour;
 }
-unsigned short NativeReminder::minute() const
+unsigned short __::minute() const
 {
 	return __minute;
 }
-unsigned short NativeReminder::second() const
+unsigned short __::second() const
 {
 	return __second;
 }
-string &NativeReminder::note()
+string &__::note()
 {
 	return __note;
 }
 
-string NativeReminder::toString() const
+string __::toString() const
 {
 	return to_string(__hour) + " : " + to_string(__minute) + " : " + to_string(__second);
 }
 
-void NativeReminder::update(unsigned short hour, unsigned short minute, unsigned short second)
+void __::update(unsigned short hour, unsigned short minute, unsigned short second)
 {
 	__hour = hour;
 	__minute = minute;

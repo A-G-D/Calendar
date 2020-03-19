@@ -3,27 +3,30 @@
 
 using namespace NativeCalendarApp;
 
-NativeWeekView::NativeWeekView(unsigned short maxWeekCount)
+#define __ NativeWeekView
+
+
+__::__(unsigned short maxWeekCount)
 	: __maxWeekCount(maxWeekCount), NativeCalendarView(7*maxWeekCount)
 {
 }
-NativeWeekView::NativeWeekView(NativeWeekView const &weekView)
+__::__(__ const &weekView)
 	: __maxWeekCount(weekView.__maxWeekCount), NativeCalendarView(weekView)
 {
 }
-NativeWeekView::NativeWeekView()
+__::__()
 	: __maxWeekCount(5), NativeCalendarView(7*5)
 {
 }
-NativeWeekView::~NativeWeekView()
+__::~__()
 {
 }
 
-unsigned short NativeWeekView::getMaxWeekCount()
+unsigned short __::getMaxWeekCount()
 {
 	return __maxWeekCount;
 }
-void NativeWeekView::setMaxWeekCount(unsigned short count)
+void __::setMaxWeekCount(unsigned short count)
 {
 	__maxWeekCount = count;
 	__daySlots = 7*count;
@@ -31,24 +34,24 @@ void NativeWeekView::setMaxWeekCount(unsigned short count)
 		display();
 }
 
-void NativeWeekView::onShow()
+void __::onShow()
 {
 	NativeCalendarView::onShow();
 }
-void NativeWeekView::onHide()
+void __::onHide()
 {
 	NativeCalendarView::onHide();
 }
-void NativeWeekView::display()
+void __::display()
 {
 	NativeCalendarView::display();
 }
 
-unsigned short NativeWeekView::daySlots() const
+unsigned short __::daySlots() const
 {
 	return 7*__maxWeekCount;
 }
-unsigned short NativeWeekView::dayCount() const
+unsigned short __::dayCount() const
 {
 	return daySlots();
 }
